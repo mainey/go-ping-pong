@@ -6,22 +6,8 @@ on:
       - 'master'
 
 jobs:
-  test: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.18'
-      - name: Get Dependencies
-        uses: |
-          go get .
-      - name: Test
-        run: go test ./...
-
   build-dockerx:
+    name: Build, test, and Push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,6 +19,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.18'
+      - name: Test
+        run: go test -v .
       - name: Build
         uses: docker/build-push-action@v4
         with:

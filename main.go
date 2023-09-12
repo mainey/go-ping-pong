@@ -16,5 +16,5 @@ func main() {
 	router := gin.Default()
 	router.GET("/ping", returnPong)
 
-	router.Run("0.0.0.0:3000")
+	router.Run(":8000")
 }
